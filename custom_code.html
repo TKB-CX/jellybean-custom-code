@@ -1,0 +1,56 @@
+<!--This goes in the 'Custom code' section of webflow -->
+
+<body>
+	<script type="module">
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+	  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+	  const firebaseConfig = {
+	    apiKey: "AIzaSyCLP3LttSdXBKY8gJL6tt8EiuuT3o45oKc",
+	  	authDomain: "jellybeans-6c05e.firebaseapp.com",
+	  	projectId: "jellybeans-6c05e",
+	  	storageBucket: "jellybeans-6c05e.firebasestorage.app",
+	  	messagingSenderId: "206998254230",
+	  	appId: "1:206998254230:web:847d07371c976c689808b7",
+	  	measurementId: "G-CGJNZ45RBN"
+	  };
+
+	  const app = initializeApp(firebaseConfig);
+	  const db = getFirestore(app);
+
+	  document.getElementById('guess-form').addEventListener('submit', async (e) => {
+	    e.preventDefault();
+	    const userGuess = parseInt(document.getElementById('guess-input').value);
+
+	    let docName = 'status';
+
+		if (window.location.hostname === 'jellybeans.webflow.io') {
+	  		docName = 'staging-status';
+		}
+
+		const gameRef = doc(db, 'game', docName);
+	    const gameSnap = await getDoc(gameRef);
+	    const data = gameSnap.data();
+
+	    if (data.isWon) {
+	      window.location.href = '/game-over';
+	      return;
+	    }
+
+	    if (userGuess === data.correctAnswer) {
+	      const winnerToken = Math.random().toString(36).substring(2, 10); // e.g. 'x8j4k9mz'
+	      await setDoc(gameRef, {
+	        ...data,
+	        isWon: true,
+	        winnerGuess: userGuess,
+	    	winnerToken
+	      });
+	      window.location.href = `/winner?access=${winnerToken}`;
+	    } else {
+	      const msgIndex = Math.floor(Math.random() * 4);
+	      
+	      window.location.href = `/try-again?msg=${msgIndex}`;
+	    }
+	  });
+	</script>	
+</body>

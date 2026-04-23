@@ -1,0 +1,39 @@
+<body>
+
+	<script type="module">
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+	  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+	  const firebaseConfig = {
+	    apiKey: "AIzaSyCLP3LttSdXBKY8gJL6tt8EiuuT3o45oKc",
+	  	authDomain: "jellybeans-6c05e.firebaseapp.com",
+	  	projectId: "jellybeans-6c05e",
+	  	storageBucket: "jellybeans-6c05e.firebasestorage.app",
+	  	messagingSenderId: "206998254230",
+	  	appId: "1:206998254230:web:847d07371c976c689808b7",
+	  	measurementId: "G-CGJNZ45RBN"
+	  };
+
+	  const app = initializeApp(firebaseConfig);
+	  const db = getFirestore(app);
+
+	  const checkGameStatus = async () => {
+	    let docName = 'status';
+
+			if (window.location.hostname === 'jellybeans.webflow.io') {
+	  		docName = 'staging-status';
+			}
+
+			const gameRef = doc(db, 'game', docName);
+	    const snapshot = await getDoc(gameRef);
+	    const data = snapshot.data();
+
+	    if (data.isWon) {
+	      window.location.href = '/game-over';
+	    }
+	  };
+
+	  checkGameStatus();
+	</script>
+
+</body>
