@@ -7,7 +7,7 @@
 | tryagain.html | Goes into the settings for the Try Again page and shows the try again message that's been randomly selected |
 | winner.html | Prevents direct access to this page and redirects the user to the correct page based on whether the correct guess has been made or not |
 
-Where the below code exists in the areas above:
+Where the below code exists in the files above:
 
 ```
 if (window.location.hostname === 'jellybeans.webflow.io') {
@@ -29,11 +29,11 @@ Due to the way this page needed to be put together there's some things to keep i
 
 The correct answer is stored in a Firestore database within the cxteam@thinkerbell.com Firebase, the project is called Jellybeans
 
-* There's one collection with 2 documents, status and staging-status, they both operate the same way with the same values but when you're testing with the Webflow generated URL it will be read/writing to staging-status (as long as you've made the URL changes outlined at the beginning of this doc)
+* There's one collection with 2 documents, *status* and *staging-status*, they both operate the same way with the same values but when you're testing with the Webflow generated URL it will be read/writing to *staging-status* (as long as you've made the URL changes outlined at the beginning of this doc)
 * The base fields required in these are:
-* * correctAnswer - set this to the value you're trying to get them to guess
-* * isWon - should be false by default, changes to `true` when the game is won
+	* `correctAnswer` - set this to the value you're trying to get them to guess
+	* `isWon` - should be false by default, changes to `true` when the game is won
 * The extra fields created when someone wins:
-* * winnerGuess - the correct value will be stored here
-* * winnerToken - A randomly generated token will be saved here, this ensures the winner is then shown the Winner page instead of the Game Over page
+	* `winnerGuess` - the correct value will be stored here
+	* `winnerToken` - A randomly generated token will be saved here, this ensures the winner is then shown the Winner page instead of the Game Over page
 * To reset the game, delete the winnerGuess and winnerToken fields and switch isWon back to false from `true`
