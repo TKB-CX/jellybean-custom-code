@@ -2,10 +2,10 @@
 
 | File | Notes |
 |---|---|
-| custom_code.html | This is saved in the overall settings of the Webflow site and controls what page the user sees based on whether a correct guess has been made or not. It also parses people guesses to either set the game as won or redirect to try again. |
+| custom_code.html | This is saved in the overall settings of the Webflow site and controls what page the user sees based on whether a correct guess has been made or not. It also parses people's guesses to either set the game as won or redirect to try again. |
 | home.html | Goes into the settings for the Home page and ensures people can only access this page if the correct guess hasn't been made |
 | tryagain.html | Goes into the settings for the Try Again page and shows the try again message that's been randomly selected |
-| winner.html | Prevents direct access to this page and redirects the user to the correct page based on whether the correct guess has been made or not |
+| winner.html | There's two sections of code here, the first between the `<head>` tags goes into the `Inside <head> tag` textarea. This is there to set the viewport of the page for scale purposes. The second between the `<body>` tags goes into the `Before </body> tag`, it prevents direct access to this page unless they are the winner and redirects the user to the correct page based on whether the correct guess has been made or not. It determines whether the user is the winner or not based on the user token passed through the URL |
 
 Where the below code exists in the files above:
 
